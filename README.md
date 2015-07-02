@@ -62,7 +62,7 @@ end
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'esv'
+gem 'excel-esv'
 ```
 
 And then execute:
@@ -71,7 +71,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install esv
+    $ gem install excel-esv
 
 
 ## Credits and license

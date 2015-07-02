@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'esv/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "esv"
+  spec.name          = "excel-esv"
   spec.version       = ESV::VERSION
   spec.authors       = ["Henrik Nyh"]
   spec.email         = ["henrik@nyh.se"]
