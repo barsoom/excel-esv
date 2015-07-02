@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Henrik Nyh"]
   spec.email         = ["henrik@nyh.se"]
   spec.summary       = %q{Excel generation with the ease of CSV generation.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/barsoom/excel-esv"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
