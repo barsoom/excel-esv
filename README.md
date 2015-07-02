@@ -23,7 +23,7 @@ File.write("/tmp/test.xls", data)
 ### Parse
 
 ```
-excel = File.read("/tmp/test.xls")
+data = File.read("/tmp/test.xls")
 output = ESV.parse(data)  # => [ [ "Name", "Dogs", … ], … ]
 ```
 
