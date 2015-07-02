@@ -1,34 +1,18 @@
 require "esv/version"
+require "esv/generator"
 require "esv/rails_controller"
 require "spreadsheet"
 
-class ESV
+module ESV
   def self.generate
-    instance = new
-    yield(instance)
-    instance.render
+    generator = Generator.new
+    yield(generator)
+    generator.render
   end
 
-  def initialize
-    @data_rows = []
-  end
-
-  def <<(row)
-    @data_rows << row
-  end
-
-  def render
-    book = Spreadsheet::Workbook.new
-    sheet = book.create_worksheet
-
-    @data_rows.each_with_index do |data_row, index|
-      row = sheet.row(index)
-      row.push(*data_row)
-    end
-
-    content = ""
-    fake_file = StringIO.new(content)
-    book.write(fake_file)
-    content
+  def self.parse(data)
+    fake_file = StringIO.new(data)
+    book = Spreadsheet.open(fake_file)
+    book.worksheet(0).to_a
   end
 end

@@ -1,6 +1,6 @@
 # ESV
 
-Ruby library/gem for Excel generation with the ease of CSV generation.
+Ruby library/gem for Excel parsing and generation with the ease of CSV.
 
 Exporting CSVs because Excel generation is too complex? No more!
 
@@ -8,6 +8,8 @@ CSVs can be difficult to open correctly, e.g. in Excel on Mac.
 
 
 ## Usage
+
+### Generate
 
 ```
 data = ESV.generate do |esv|
@@ -18,7 +20,14 @@ end
 File.write("/tmp/test.xls", data)
 ```
 
-### Ruby on Rails
+### Parse
+
+```
+excel = File.read("/tmp/test.xls")
+output = ESV.parse(data)  # => [ [ "Name", "Dogs", … ], … ]
+```
+
+### Generate in Ruby on Rails
 
 In `config/initializers/mime_types.rb`:
 

@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = ESV::VERSION
   spec.authors       = ["Henrik Nyh"]
   spec.email         = ["henrik@nyh.se"]
-  spec.summary       = %q{Excel generation with the ease of CSV generation.}
+  spec.summary       = %q{Excel parsing and generation with the ease of CSV.}
   spec.homepage      = "https://github.com/barsoom/excel-esv"
   spec.license       = "MIT"
 
