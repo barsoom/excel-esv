@@ -12,6 +12,8 @@ CSVs can be difficult to open correctly, e.g. in Excel on Mac.
 ### Generate
 
 ```
+require "esv"
+
 data = ESV.generate do |esv|
   esv << [ "Name", "Dogs", "Cats" ]
   esv << [ "Victor", 1, 4 ]
@@ -23,6 +25,8 @@ File.write("/tmp/test.xls", data)
 ### Parse
 
 ```
+require "esv"
+
 data = File.read("/tmp/test.xls")
 output = ESV.parse(data)  # => [ [ "Name", "Dogs", … ], … ]
 ```
