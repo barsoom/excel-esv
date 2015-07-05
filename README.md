@@ -11,7 +11,7 @@ CSVs can be difficult to open correctly, e.g. in Excel on Mac.
 
 ### Generate
 
-```
+``` ruby
 require "esv"
 
 data = ESV.generate do |esv|
@@ -24,7 +24,7 @@ File.write("/tmp/test.xls", data)
 
 ### Parse
 
-```
+``` ruby
 require "esv"
 
 data = File.read("/tmp/test.xls")
@@ -35,13 +35,13 @@ output = ESV.parse(data)  # => [ [ "Name", "Dogs", … ], … ]
 
 In `config/initializers/mime_types.rb`:
 
-```
+``` ruby
 Mime::Type.register ESV::MIME_TYPE, "xls"
 ```
 
 As a model or whatever you prefer:
 
-```
+``` ruby
 class MyExcelDocument
   def generate(name)
     ESV.generate { |esv| esv << [ "Hello #{name}" ] }
@@ -51,7 +51,7 @@ end
 
 Controller:
 
-```
+``` ruby
 class MyController < ApplicationController
   include ESV::RailsController  # for send_excel
 
@@ -74,7 +74,7 @@ end
 
 Add this line to your application's Gemfile:
 
-```ruby
+``` ruby
 gem 'excel-esv'
 ```
 
