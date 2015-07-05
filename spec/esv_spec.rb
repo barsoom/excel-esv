@@ -15,3 +15,24 @@ describe ESV, ".generate and .parse" do
     ]
   end
 end
+
+describe ESV, ".parse" do
+  it "raises if there's more than one worksheet" do
+    expect {
+      ESV.parse(excel_file_with_two_worksheets)
+    }.to raise_error(/Expected 1 worksheet, found 2/)
+  end
+
+  private
+
+  def excel_file_with_two_worksheets
+    book = Spreadsheet::Workbook.new
+    book.create_worksheet
+    book.create_worksheet
+
+    data = ""
+    fake_file = StringIO.new(data)
+    book.write(fake_file)
+    data
+  end
+end

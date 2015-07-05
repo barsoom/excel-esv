@@ -31,6 +31,8 @@ data = File.read("/tmp/test.xls")
 output = ESV.parse(data)  # => [ [ "Name", "Dogs", … ], … ]
 ```
 
+This assumes a file with a single worksheet and will raise otherwise.
+
 ### Generate in Ruby on Rails
 
 In `config/initializers/mime_types.rb`:
