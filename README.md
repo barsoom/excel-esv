@@ -43,7 +43,7 @@ As a model or whatever you prefer:
 
 ``` ruby
 class MyExcelDocument
-  def generate(name)
+  def self.generate(name)
     ESV.generate { |esv| esv << [ "Hello #{name}" ] }
   end
 end
@@ -56,7 +56,7 @@ class MyController < ApplicationController
   include ESV::RailsController  # for send_excel
 
   def show
-    data = MyExcelDocument.new("Rails").generate
+    data = MyExcelDocument.generate("Rails")
     send_excel(data)
   end
 
