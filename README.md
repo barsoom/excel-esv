@@ -9,7 +9,7 @@ CSVs can be difficult to open correctly, e.g. in Excel on Mac.
 
 ## Usage
 
-### Generate
+### Generate data
 
 ``` ruby
 require "esv"
@@ -22,7 +22,18 @@ end
 File.write("/tmp/test.xls", data)
 ```
 
-### Parse
+### Generate file
+
+``` ruby
+require "esv"
+
+ESV.generate_file("/tmp/test.xls") do |esv|
+  esv << [ "Name", "Dogs", "Cats" ]
+  esv << [ "Victor", 1, 4 ]
+end
+```
+
+### Parse data
 
 ``` ruby
 require "esv"

@@ -36,3 +36,31 @@ describe ESV, ".parse" do
     data
   end
 end
+
+describe ESV, ".generate_file" do
+  before do
+    @file = Tempfile.new("esv")
+  end
+
+  it "works" do
+    path = @file.path
+
+    ESV.generate_file(path) do |esv|
+      esv << [ "Dogs", "Cats" ]
+      esv << [ 1, 2 ]
+    end
+
+    data = File.read(path)
+    output = ESV.parse(data)
+
+    expect(output).to eq [
+      [ "Dogs", "Cats" ],
+      [ 1, 2 ],
+    ]
+  end
+
+  after do
+    @file.close
+    @file.unlink
+  end
+end

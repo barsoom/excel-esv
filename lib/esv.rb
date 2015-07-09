@@ -10,6 +10,12 @@ module ESV
     generator.render
   end
 
+  def self.generate_file(path, &block)
+    File.open(path, "w") do |file|
+      file.write generate(&block)
+    end
+  end
+
   def self.parse(data)
     fake_file = StringIO.new(data)
     book = Spreadsheet.open(fake_file)
