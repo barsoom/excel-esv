@@ -39,7 +39,19 @@ end
 require "esv"
 
 data = File.read("/tmp/test.xls")
-output = ESV.parse(data)  # => [ [ "Name", "Dogs", … ], … ]
+output = ESV.parse(data)
+# => [ [ "Name", "Dogs", … ], … ]
+```
+
+This assumes a file with a single worksheet and will raise otherwise.
+
+### Parse file
+
+``` ruby
+require "esv"
+
+output = ESV.parse_file("/tmp/test.xls")
+# => [ [ "Name", "Dogs", … ], … ]
 ```
 
 This assumes a file with a single worksheet and will raise otherwise.

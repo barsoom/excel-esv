@@ -37,7 +37,7 @@ describe ESV, ".parse" do
   end
 end
 
-describe ESV, ".generate_file" do
+describe ESV, ".generate_file and .parse_file" do
   before do
     @file = Tempfile.new("esv")
   end
@@ -50,8 +50,7 @@ describe ESV, ".generate_file" do
       esv << [ 1, 2 ]
     end
 
-    data = File.read(path)
-    output = ESV.parse(data)
+    output = ESV.parse_file(path)
 
     expect(output).to eq [
       [ "Dogs", "Cats" ],

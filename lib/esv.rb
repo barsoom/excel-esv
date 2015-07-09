@@ -27,4 +27,8 @@ module ESV
 
     book.worksheet(0).to_a
   end
+
+  def self.parse_file(path)
+    parse File.read(path)
+  end
 end
