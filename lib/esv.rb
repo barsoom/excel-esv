@@ -11,7 +11,7 @@ module ESV
   end
 
   def self.generate_file(path, &block)
-    File.open(path, "w") do |file|
+    File.open(path, "wb") do |file|
       file.write generate(&block)
     end
   end
