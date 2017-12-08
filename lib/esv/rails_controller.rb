@@ -5,11 +5,12 @@ module ESV
   module RailsController
     private
 
-    def send_excel(data)
+    def send_excel(data, filename: nil)
       send_data(
         data,
         type: ESV::CONTENT_TYPE,
         disposition: "attachment",
+        filename: filename,
       )
     end
   end

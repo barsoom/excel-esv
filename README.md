@@ -83,6 +83,7 @@ class MyController < ApplicationController
   def show
     data = MyExcelDocument.generate("Rails")
     send_excel(data)
+    # or: send_excel(data, filename: "myfilename.xls")
   end
 
   def another_example
