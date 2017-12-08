@@ -1,3 +1,3 @@
 module ESV
-  VERSION = "0.0.7"
+  VERSION = "1.0.0"
 end
