@@ -23,7 +23,7 @@ describe ESV, ".parse" do
     }.to raise_error(/Expected 1 worksheet, found 2/)
   end
 
-  it "ignores formatting" do
+  it "ignores formatting, always returning a plain array of data" do
     output = ESV.parse(excel_file_with_formatting([1, 2]))
     expect(output).to eq [
       [ 1, 2 ],
