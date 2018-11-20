@@ -2,9 +2,9 @@
 
 Ruby library/gem for Excel parsing and generation with the ease of CSV.
 
-Exporting CSVs because Excel generation is too complex? No more!
+Exporting CSVs because Excel generation is too complex? No more! CSVs can also be difficult to open correctly, e.g. in Excel on Mac.
 
-CSVs can be difficult to open correctly, e.g. in Excel on Mac.
+ESV will read and generate XLS files. There is currently no XLSX support, but Pull Requests are welcome.
 
 
 ## Usage
