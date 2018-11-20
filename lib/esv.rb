@@ -25,7 +25,14 @@ module ESV
     worksheet_count = book.worksheets.length
     raise "Expected 1 worksheet, found #{worksheet_count}." if worksheet_count > 1
 
-    book.worksheet(0).to_a.map(&:to_a)
+    book.worksheet(0).to_a.map(&:to_a).map { |row|
+      row.map { |cell|
+        case cell
+        when Spreadsheet::Formula then cell.value
+        else cell
+        end
+      }
+    }
   end
 
   def self.parse_file(path)

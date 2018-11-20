@@ -32,6 +32,15 @@ describe ESV, ".parse" do
     expect(output[0].class).to eq Array
   end
 
+  it "returns the last value of a formula cell" do
+    output = ESV.parse(excel_file_with_formula)
+    expect(output).to eq [
+      [ "one", "two" ],
+    ]
+
+    expect(output[0].class).to eq Array
+  end
+
   private
 
   def excel_file_with_two_worksheets
@@ -50,6 +59,20 @@ describe ESV, ".parse" do
     sheet = book.create_worksheet
     sheet.row(0).replace(data)
     sheet.row(0).default_format = Spreadsheet::Format.new(color: :blue)
+
+    data = ""
+    fake_file = StringIO.new(data)
+    book.write(fake_file)
+    data
+  end
+
+  def excel_file_with_formula
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet
+
+    formula = Spreadsheet::Formula.new
+    formula.value = "two"
+    sheet.row(0).replace([ "one", formula ])
 
     data = ""
     fake_file = StringIO.new(data)
