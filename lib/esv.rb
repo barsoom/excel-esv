@@ -29,6 +29,7 @@ module ESV
       row.map { |cell|
         case cell
         when Spreadsheet::Formula then cell.value
+        when Spreadsheet::Link then cell.href
         else cell
         end
       }

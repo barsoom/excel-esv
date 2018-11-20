@@ -41,38 +41,59 @@ describe ESV, ".parse" do
     expect(output[0].class).to eq Array
   end
 
+  it "returns the last value of a formula cell" do
+    output = ESV.parse(excel_file_with_formula)
+    expect(output).to eq [
+      [ "one", "two" ],
+    ]
+
+    expect(output[0].class).to eq Array
+  end
+
+  it "returns the URL of a link cell" do
+    output = ESV.parse(excel_file_with_link("https://example.com"))
+    expect(output).to eq [
+      [ "one", "https://example.com" ],
+    ]
+
+    expect(output[0][1].class).to eq String
+  end
+
   private
 
   def excel_file_with_two_worksheets
-    book = Spreadsheet::Workbook.new
-    book.create_worksheet
-    book.create_worksheet
-
-    data = ""
-    fake_file = StringIO.new(data)
-    book.write(fake_file)
-    data
+    excel_file do |sheet, book|
+      book.create_worksheet
+    end
   end
 
   def excel_file_with_formatting(data)
-    book = Spreadsheet::Workbook.new
-    sheet = book.create_worksheet
-    sheet.row(0).replace(data)
-    sheet.row(0).default_format = Spreadsheet::Format.new(color: :blue)
-
-    data = ""
-    fake_file = StringIO.new(data)
-    book.write(fake_file)
-    data
+    excel_file do |sheet|
+      sheet.row(0).replace(data)
+      sheet.row(0).default_format = Spreadsheet::Format.new(color: :blue)
+    end
   end
 
   def excel_file_with_formula
+    excel_file do |sheet|
+      formula = Spreadsheet::Formula.new
+      formula.value = "two"
+      sheet.row(0).replace([ "one", formula ])
+    end
+  end
+
+  def excel_file_with_link(url)
+    excel_file do |sheet|
+      link = Spreadsheet::Link.new(url)
+      sheet.row(0).replace([ "one", link ])
+    end
+  end
+
+  def excel_file(&block)
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
 
-    formula = Spreadsheet::Formula.new
-    formula.value = "two"
-    sheet.row(0).replace([ "one", formula ])
+    block.call(sheet, book)
 
     data = ""
     fake_file = StringIO.new(data)

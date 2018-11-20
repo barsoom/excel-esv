@@ -1,6 +1,7 @@
-# 2.1.0
+# 3.0.0
 
 * Returns the last value of any formula cells instead of returning a `Spreadsheet::Formula`.
+* Returns the URL of any link cells instead of returning a `Spreadsheet::Link`.
 
 # 2.0.0
 

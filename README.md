@@ -6,6 +6,8 @@ Exporting CSVs because Excel generation is too complex? No more! CSVs can also b
 
 ESV will read and generate XLS files. There is currently no XLSX support, but Pull Requests are welcome.
 
+By design, ESV only reads and writes simple values like integers, floats, strings and dates/datetimes. When parsing a spreadsheet with formulas, you will get their last value, if known.
+
 
 ## Usage
 
