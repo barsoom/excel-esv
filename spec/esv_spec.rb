@@ -18,13 +18,23 @@ end
 
 describe ESV, ".parse" do
   it "raises if there's more than one worksheet" do
+    excel_file_with_two_worksheets = generate_excel_file do |sheet, book|
+      book.create_worksheet
+    end
+
     expect {
       ESV.parse(excel_file_with_two_worksheets)
     }.to raise_error(/Expected 1 worksheet, found 2/)
   end
 
   it "ignores formatting, always returning a plain array of data" do
-    output = ESV.parse(excel_file_with_formatting([1, 2]))
+    excel_file_with_formatting = generate_excel_file do |sheet|
+      sheet.row(0).replace([ 1, 2 ])
+      sheet.row(0).default_format = Spreadsheet::Format.new(color: :blue)
+    end
+
+    output = ESV.parse(excel_file_with_formatting)
+
     expect(output).to eq [
       [ 1, 2 ],
     ]
@@ -33,27 +43,29 @@ describe ESV, ".parse" do
   end
 
   it "returns the last value of a formula cell" do
+    excel_file_with_formula = generate_excel_file do |sheet|
+      formula = Spreadsheet::Formula.new
+      formula.value = "two"
+      sheet.row(0).replace([ "one", formula ])
+    end
+
     output = ESV.parse(excel_file_with_formula)
+
     expect(output).to eq [
       [ "one", "two" ],
     ]
-
     expect(output[0].class).to eq Array
   end
 
-  it "returns the last value of a formula cell" do
-    output = ESV.parse(excel_file_with_formula)
-    expect(output).to eq [
-      [ "one", "two" ],
-    ]
-
-    expect(output[0].class).to eq Array
-  end
 
   it "returns the URL of a link cell" do
-    output = ESV.parse(excel_file_with_link("https://example.com"))
+    excel_file_with_link = generate_excel_file do |sheet|
+      link = Spreadsheet::Link.new("https://example.com", "desc", "foo")
+      sheet.row(0).replace([ "one", link ])
+    end
+    output = ESV.parse(excel_file_with_link)
     expect(output).to eq [
-      [ "one", "https://example.com" ],
+      [ "one", "https://example.com#foo" ],
     ]
 
     expect(output[0][1].class).to eq String
@@ -61,35 +73,7 @@ describe ESV, ".parse" do
 
   private
 
-  def excel_file_with_two_worksheets
-    excel_file do |sheet, book|
-      book.create_worksheet
-    end
-  end
-
-  def excel_file_with_formatting(data)
-    excel_file do |sheet|
-      sheet.row(0).replace(data)
-      sheet.row(0).default_format = Spreadsheet::Format.new(color: :blue)
-    end
-  end
-
-  def excel_file_with_formula
-    excel_file do |sheet|
-      formula = Spreadsheet::Formula.new
-      formula.value = "two"
-      sheet.row(0).replace([ "one", formula ])
-    end
-  end
-
-  def excel_file_with_link(url)
-    excel_file do |sheet|
-      link = Spreadsheet::Link.new(url)
-      sheet.row(0).replace([ "one", link ])
-    end
-  end
-
-  def excel_file(&block)
+  def generate_excel_file(&block)
     book = Spreadsheet::Workbook.new
     sheet = book.create_worksheet
 
