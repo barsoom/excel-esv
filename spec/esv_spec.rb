@@ -1,6 +1,6 @@
 require "esv"
 
-describe ESV, ".generate and .parse" do
+RSpec.describe ESV, ".generate and .parse" do
   it "works" do
     data = ESV.generate do |esv|
       esv << [ "Dogs", "Cats" ]
@@ -16,7 +16,7 @@ describe ESV, ".generate and .parse" do
   end
 end
 
-describe ESV, ".parse" do
+RSpec.describe ESV, ".parse" do
   it "raises if there's more than one worksheet" do
     excel_file_with_two_worksheets = generate_excel_file do |sheet, book|
       book.create_worksheet
@@ -86,7 +86,7 @@ describe ESV, ".parse" do
   end
 end
 
-describe ESV, ".generate_file and .parse_file" do
+RSpec.describe ESV, ".generate_file and .parse_file" do
   before do
     @file = Tempfile.new("esv")
   end
