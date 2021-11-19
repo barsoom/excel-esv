@@ -11,6 +11,7 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Excel parsing and generation with the ease of CSV.}
   spec.homepage      = "https://github.com/barsoom/excel-esv"
   spec.license       = "MIT"
+  spec.metadata      = { "rubygems_mfa_required" => "true" }
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.require_paths = [ "lib" ]
