@@ -47,6 +47,26 @@ output = ESV.parse(data)
 
 This assumes a file with a single worksheet and will raise otherwise.
 
+`.parse` supports the `header_converters:` keyword argument, which takes the same arguments as `CSV.parse` does:
+
+- a Symbol name for a registered header converter
+- a Proc which takes the value and returns the converted value
+- an Array of Symbol names for registered header converters
+
+``` ruby
+require "esv"
+
+data = File.read("/tmp/test.xls")
+output = ESV.parse(data, header_converters: :symbol)
+# => [ [ :name, :dogs, … ], … ]
+```
+
+Registering a new converter:
+
+``` ruby
+ESV::HEADER_CONVERTERS[:upcase] = ->(value) { value.upcase }
+```
+
 ### Parse file
 
 ``` ruby
@@ -57,6 +77,8 @@ output = ESV.parse_file("/tmp/test.xls")
 ```
 
 This assumes a file with a single worksheet and will raise otherwise.
+
+Also supports `header_converters:`.
 
 ### Generate in Ruby on Rails
 
