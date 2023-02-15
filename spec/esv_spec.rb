@@ -72,6 +72,57 @@ RSpec.describe ESV do
       expect(output[0][1].class).to eq String
     end
 
+    context "when given a header_converters: option" do
+      let(:data) {
+        ESV.generate do |esv|
+          esv << [ "Dogs", "Cats cats" ]
+          esv << [ 1, 2 ]
+        end
+      }
+
+      it "lets you specify header_converters by symbolic name" do
+        output = ESV.parse(data, header_converters: :downcase)
+
+        expect(output).to eq [
+          [ "dogs", "cats cats" ],
+          [ 1, 2 ],
+        ]
+      end
+
+      it "lets you specify header_converters as a proc" do
+        output = ESV.parse(data, header_converters: ->(value) { value.upcase })
+
+        expect(output).to eq [
+          [ "DOGS", "CATS CATS" ],
+          [ 1, 2 ],
+        ]
+      end
+
+      it "lets you register new symbolic names for header_converters and use them" do
+        ESV::HEADER_CONVERTERS[:upcase] = ->(value) { value.upcase }
+
+        output = ESV.parse(data, header_converters: :upcase)
+
+        expect(output).to eq [
+          [ "DOGS", "CATS CATS" ],
+          [ 1, 2 ],
+        ]
+
+        ESV::HEADER_CONVERTERS.delete(:upcase)
+      end
+
+      it "lets you specify header_converters by symbolic names as a list and have them apply in order" do
+        ESV::HEADER_CONVERTERS[:reverse] = ->(value) { value.reverse }
+        output = ESV.parse(data, header_converters: [ :downcase, :reverse, :symbol ])
+
+        expect(output).to eq [
+          [ :sgod, :stac_stac ],
+          [ 1, 2 ],
+        ]
+        ESV::HEADER_CONVERTERS.delete(:reverse)
+      end
+    end
+
     private
 
     def generate_excel_file(&block)
