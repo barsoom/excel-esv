@@ -20,7 +20,9 @@ module ESV
   #
   # @see https://rubyapi.org/3.2/o/csv#class-CSV-label-Custom+Header+Converters
   HEADER_CONVERTERS = {
-    downcase: ->(value) { value.downcase },
+    downcase: ->(value) {
+      value.respond_to?(:downcase) ? value.downcase : value
+    },
     # Details:
     #
     #  Strips leading and trailing whitespace.

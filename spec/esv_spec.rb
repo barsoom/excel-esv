@@ -17,6 +17,18 @@ RSpec.describe ESV do
     end
   end
 
+  describe "::HEADER_CONVERTERS" do
+    context "with :downcase" do
+      it "downcases string value" do
+        expect(described_class::HEADER_CONVERTERS[:downcase].call("CAT")).to eq("cat")
+      end
+
+      it "returns a non-string value" do
+        expect(described_class::HEADER_CONVERTERS[:downcase].call(1)).to eq(1)
+      end
+    end
+  end
+
   describe ".parse" do
     it "raises if there's more than one worksheet" do
       excel_file_with_two_worksheets = generate_excel_file do |sheet, book|
