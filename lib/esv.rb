@@ -31,7 +31,7 @@ module ESV
     #  Removes non-word characters.
     #  Makes the string into a Symbol.
     symbol: ->(value) {
-      value.strip.downcase.tr(" ", "_").gsub(/W+/, "").to_sym
+      value.to_s.strip.downcase.tr(" ", "_").gsub(/\W+/, "").to_sym
     },
   }
 

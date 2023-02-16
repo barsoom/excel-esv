@@ -27,6 +27,34 @@ RSpec.describe ESV do
         expect(described_class::HEADER_CONVERTERS[:downcase].call(1)).to eq(1)
       end
     end
+
+    context "with :symbol" do
+      it "stringifies before symbolizing given value" do
+        expect(described_class::HEADER_CONVERTERS[:symbol].call(1)).to eq(:"1")
+      end
+
+      it "symbolizes given value" do
+        expect(described_class::HEADER_CONVERTERS[:symbol].call("cat")).to eq(:cat)
+      end
+
+      context "symbolizes and" do
+        it "downcases given value" do
+          expect(described_class::HEADER_CONVERTERS[:symbol].call("CAT")).to eq(:cat)
+        end
+
+        it "strips any spaces around value" do
+          expect(described_class::HEADER_CONVERTERS[:symbol].call("   CAT ")).to eq(:cat)
+        end
+
+        it "replaces embedded spaces with underscores" do
+          expect(described_class::HEADER_CONVERTERS[:symbol].call("CAT CAT")).to eq(:cat_cat)
+        end
+
+        it "removes non-word characters" do
+          expect(described_class::HEADER_CONVERTERS[:symbol].call("CAT?")).to eq(:cat)
+        end
+      end
+    end
   end
 
   describe ".parse" do
