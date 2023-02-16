@@ -36,7 +36,10 @@ module ESV
   }
 
   # @param data [Object] Spreadsheet data to be parsed.
-  # @param header_converters [nil, Array<Symbol>, Symbol, Proc]
+  # @param header_converters [nil, Symbol, Proc, Array<Symbol>] If given, can take these forms:
+  #   - a Symbol name for a registered header converter
+  #   - a Proc which takes the value and returns the converted value
+  #   - an Array of Symbol names for registered header converters
   # @return [Array<Array>] a list of rows
   def self.parse(data, header_converters: nil)
     fake_file = StringIO.new(data)
