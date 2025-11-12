@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.2.0 (Nov 12, 2025)
+
+* Support `worksheet_index:` in `.parse_file`, too.
+
 ## 3.1.0 (Nov 12, 2025)
 
 * Support specifying worksheet index when there are multiple: `ESV.parse(data, worksheet_index: 0)`.

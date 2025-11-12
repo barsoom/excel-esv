@@ -87,7 +87,7 @@ module ESV
     }
   end
 
-  def self.parse_file(path, header_converters: nil)
-    parse(File.read(path), header_converters: header_converters)
+  def self.parse_file(path, header_converters: nil, worksheet_index: nil)
+    parse(File.read(path), header_converters: header_converters, worksheet_index: worksheet_index)
   end
 end

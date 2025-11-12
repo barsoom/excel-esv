@@ -80,9 +80,7 @@ output = ESV.parse_file("/tmp/test.xls")
 # => [ [ "Name", "Dogs", … ], … ]
 ```
 
-This assumes a file with a single worksheet and will raise otherwise.
-
-Also supports `header_converters:`.
+This is a thin wrapper around `ESV.parse` and takes the same arguments.
 
 ### Generate in Ruby on Rails
 

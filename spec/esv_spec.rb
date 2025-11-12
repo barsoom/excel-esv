@@ -208,7 +208,7 @@ RSpec.describe ESV do
         esv << [ 1, 2 ]
       end
 
-      output = ESV.parse_file(path)
+      output = ESV.parse_file(path, worksheet_index: 0)
 
       expect(output).to eq [
         [ "Dogs", "Cats" ],
