@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 3.0.1 (Nov 19, 2021)
 
 * Add `ESV.parse(data, header_converters:)` [#9]
 
