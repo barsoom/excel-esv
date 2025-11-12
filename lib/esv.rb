@@ -40,18 +40,21 @@ module ESV
   #   - a Symbol name for a registered header converter
   #   - a Proc which takes the value and returns the converted value
   #   - an Array of Symbol names for registered header converters
+  # @param worksheet_index [nil, Integer] If given, specifies which worksheet index to parse (first is 0). If nil, expects exactly one worksheet.
   # @return [Array<Array>] a list of rows
-  def self.parse(data, header_converters: nil)
+  def self.parse(data, header_converters: nil, worksheet_index: nil)
     fake_file = StringIO.new(data)
     book = Spreadsheet.open(fake_file)
 
-    # We could support multiple worksheets, but let's not until we actually need it.
-    # Until then, we prefer raising to silently ignoring worksheets.
-    worksheet_count = book.worksheets.length
-    raise "Expected 1 worksheet, found #{worksheet_count}." if worksheet_count > 1
+    # We prefer raising to silently ignoring worksheets.
+    if !worksheet_index && book.worksheets.length > 1
+      raise "Expected 1 worksheet, found #{book.worksheets.length}."
+    end
+
+    worksheet_index ||= 0
 
     is_first_row = true
-    book.worksheet(0).to_a.map(&:to_a).map { |row|
+    book.worksheet(worksheet_index).to_a.map(&:to_a).map { |row|
       row.each_with_index.map { |cell, index|
         value =
           case cell

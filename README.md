@@ -45,7 +45,11 @@ output = ESV.parse(data)
 # => [ [ "Name", "Dogs", … ], … ]
 ```
 
-This assumes a file with a single worksheet and will raise otherwise.
+This will raise for a file with multiple worksheets unless you explicitly specify the one you want (the first worksheet is index 0):
+
+``` ruby
+ESV.parse(data, worksheet_index: 0)
+```
 
 `.parse` supports the `header_converters:` keyword argument, which takes the same arguments as `CSV.parse` does:
 

@@ -58,14 +58,31 @@ RSpec.describe ESV do
   end
 
   describe ".parse" do
-    it "raises if there's more than one worksheet" do
-      excel_file_with_two_worksheets = generate_excel_file do |sheet, book|
-        book.create_worksheet
-      end
+    describe "worksheet handling" do
+      context "with more than one worksheet" do
+        let(:excel_file_with_two_worksheets) {
+          generate_excel_file do |sheet_0, book|
+            sheet_0.row(0).replace([ "I am worksheet 0" ])
 
-      expect {
-        ESV.parse(excel_file_with_two_worksheets)
-      }.to raise_error(/Expected 1 worksheet, found 2/)
+            sheet_1 = book.create_worksheet
+            sheet_1.row(0).replace([ "I am worksheet 1" ])
+          end
+        }
+
+        it "raises when not given a worksheet index" do
+          expect {
+            ESV.parse(excel_file_with_two_worksheets)
+          }.to raise_error(/Expected 1 worksheet, found 2/)
+        end
+
+        it "allows specifying a worksheet index" do
+          output = ESV.parse(excel_file_with_two_worksheets, worksheet_index: 0)
+          expect(output).to eq [[ "I am worksheet 0" ]]
+
+          output = ESV.parse(excel_file_with_two_worksheets, worksheet_index: 1)
+          expect(output).to eq [[ "I am worksheet 1" ]]
+        end
+      end
     end
 
     it "ignores formatting, always returning a plain array of data" do

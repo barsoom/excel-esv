@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.1.0 (Nov 12, 2025)
+
+* Support specifying worksheet index when there are multiple: `ESV.parse(data, worksheet_index: 0)`.
+
 ## 3.0.1 (Nov 19, 2021)
 
 * Add `ESV.parse(data, header_converters:)` [#9]
