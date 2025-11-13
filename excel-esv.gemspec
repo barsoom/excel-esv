@@ -17,6 +17,6 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0")
   spec.require_paths = [ "lib" ]
 
-  spec.add_runtime_dependency "spreadsheet"
   spec.add_runtime_dependency "logger"
+  spec.add_runtime_dependency "spreadsheet"
 end
