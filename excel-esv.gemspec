@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/barsoom/excel-esv"
   spec.license       = "MIT"
   spec.metadata      = { "rubygems_mfa_required" => "true" }
+  spec.required_ruby_version = ">= 3.1.0"
 
   spec.files         = `git ls-files -z`.split("\x0")
   spec.require_paths = [ "lib" ]
