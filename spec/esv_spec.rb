@@ -77,10 +77,10 @@ RSpec.describe ESV do
 
         it "allows specifying a worksheet index" do
           output = ESV.parse(excel_file_with_two_worksheets, worksheet_index: 0)
-          expect(output).to eq [[ "I am worksheet 0" ]]
+          expect(output).to eq [ [ "I am worksheet 0" ] ]
 
           output = ESV.parse(excel_file_with_two_worksheets, worksheet_index: 1)
-          expect(output).to eq [[ "I am worksheet 1" ]]
+          expect(output).to eq [ [ "I am worksheet 1" ] ]
         end
       end
     end
