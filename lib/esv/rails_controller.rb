@@ -10,7 +10,7 @@ module ESV
         data,
         type: ESV::CONTENT_TYPE,
         disposition: "attachment",
-        filename: filename,
+        filename:,
       )
     end
   end
