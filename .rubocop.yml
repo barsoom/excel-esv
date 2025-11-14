@@ -3,5 +3,3 @@ AllCops:
     - "tmp/**/*"
 inherit_gem:
   barsoom_utils: shared_rubocop.yml
-Style/SymbolProc:
-  Enabled: false
