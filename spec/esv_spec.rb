@@ -147,7 +147,7 @@ RSpec.describe ESV do
       end
 
       it "lets you specify header_converters as a proc" do
-        output = ESV.parse(data, header_converters: lambda(&:upcase))
+        output = ESV.parse(data, header_converters: ->(value) { value.upcase })
 
         expect(output).to eq [
           [ "DOGS", "CATS CATS" ],
@@ -156,7 +156,7 @@ RSpec.describe ESV do
       end
 
       it "lets you register new symbolic names for header_converters and use them" do
-        ESV::HEADER_CONVERTERS[:upcase] = lambda(&:upcase)
+        ESV::HEADER_CONVERTERS[:upcase] = ->(value) { value.upcase }
 
         output = ESV.parse(data, header_converters: :upcase)
 
@@ -169,7 +169,7 @@ RSpec.describe ESV do
       end
 
       it "lets you specify header_converters by symbolic names as a list and have them apply in order" do
-        ESV::HEADER_CONVERTERS[:reverse] = lambda(&:reverse)
+        ESV::HEADER_CONVERTERS[:reverse] = ->(value) { value.reverse }
         output = ESV.parse(data, header_converters: [ :downcase, :reverse, :symbol ])
 
         expect(output).to eq [
