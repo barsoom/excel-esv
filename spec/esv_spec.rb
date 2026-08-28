@@ -15,6 +15,44 @@ RSpec.describe ESV do
         [ 1, 2 ],
       ]
     end
+
+    it "keeps date and time cells readable as such, rather than as text" do
+      data = ESV.generate do |esv|
+        esv << [ Date.new(2026, 6, 24), DateTime.new(2026, 6, 24, 13, 30, 5) ]
+      end
+
+      expect(ESV.parse(data)).to eq([ [ Date.new(2026, 6, 24), DateTime.new(2026, 6, 24, 13, 30, 5) ] ])
+    end
+
+    it "reads a Time back as a DateTime" do
+      data = ESV.generate { |esv| esv << [ Time.utc(2026, 6, 24, 13, 30, 5) ] }
+
+      expect(ESV.parse(data)).to eq([ [ DateTime.new(2026, 6, 24, 13, 30, 5) ] ])
+    end
+  end
+
+  describe ".generate" do
+    it "formats date and time cells so that both Excel and Numbers.app render them" do
+      data = ESV.generate do |esv|
+        esv << [ Date.new(2026, 6, 24), Time.utc(2026, 6, 24, 13, 30), DateTime.new(2026, 6, 24, 13, 30), "Dogs", 1 ]
+      end
+
+      expect(number_formats_in(data)).to eq([
+        "yyyy-MM-dd",
+        "yyyy-MM-dd hh:mm:ss",
+        "yyyy-MM-dd hh:mm:ss",
+        "GENERAL",
+        "GENERAL",
+      ])
+    end
+
+    private
+
+    def number_formats_in(data)
+      row = Spreadsheet.open(StringIO.new(data)).worksheet(0).row(0)
+
+      row.each_with_index.map { |_value, index| row.format(index).number_format }
+    end
   end
 
   describe "::HEADER_CONVERTERS" do

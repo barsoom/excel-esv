@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.3.0 (Aug 28, 2026)
+
+* Fix Numbers.app misrendering by formatting date cells as ISO 8601 ("2026-08-28") and time cells as ISO-like ("2026-08-28 13:45").
+
 ## 3.2.0 (Nov 12, 2025)
 
 * Support `worksheet_index:` in `.parse_file`, too.
