@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "esv/version"
 require "esv/generator"
 require "esv/rails_controller"

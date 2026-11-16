@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ESV
   MIME_TYPE = "application/vnd.ms-excel"
   CONTENT_TYPE = "#{MIME_TYPE}; charset=utf-8"
