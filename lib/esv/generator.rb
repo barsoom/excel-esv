@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ESV::Generator
   # The spreadsheet gem otherwise formats date and time cells as "DD.MM.YYYY".
   # Excel reads that case-insensitively, but Numbers.app only recognises the "MM", so it renders e.g. "DD.06.YYYY". Lowercase "dd" and "yyyy" work in both.
@@ -23,7 +25,7 @@ class ESV::Generator
       format_dates_and_times(row, data_row)
     end
 
-    content = ""
+    content = +""
     fake_file = StringIO.new(content)
     book.write(fake_file)
     content

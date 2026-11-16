@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "esv"
 
 RSpec.describe ESV do
@@ -226,7 +228,7 @@ RSpec.describe ESV do
 
       block.call(sheet, book)
 
-      data = ""
+      data = +""
       fake_file = StringIO.new(data)
       book.write(fake_file)
       data
